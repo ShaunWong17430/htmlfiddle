@@ -3,6 +3,12 @@
 HTML Fiddle 是一个下游衍生项目（derivative work）。本仓库内并非所有代码都由本项目
 作者撰写。下表列出每一部分的来源与许可状态，按此使用。
 
+> **关于根 `LICENSE` 的适用范围（重要）**
+> 根 `LICENSE` 是标准 MIT 文本，但它**只适用于第 3 节列出的本项目原创文件**。
+> 第 1 节（上游 HTML Workbench 衍生文件）与第 2 节（GrapesJS，BSD-3-Clause）
+> 各有其归属与许可状态，不受该 MIT 授权覆盖。
+> 换句话说：**不要看到根目录有 MIT 就认为整个仓库都能当 MIT 用。**
+
 ---
 
 ## 1. 上游：HTML Workbench
