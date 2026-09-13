@@ -1,0 +1,103 @@
+# NOTICE — 第三方组件与归属 / Third-party attribution
+
+HTML Fiddle 是一个下游衍生项目（derivative work）。本仓库内并非所有代码都由本项目
+作者撰写。下表列出每一部分的来源与许可状态，按此使用。
+
+---
+
+## 1. 上游：HTML Workbench
+
+| 项目 | 值 |
+| --- | --- |
+| 上游仓库 | https://github.com/alienzhou/html-workbench |
+| 取用提交 | `8418087d48bbbfd2c774cea0aa34ad03a37b0a9f`（2026-08-19） |
+| 上游路径 | `skill/html-workbench/scripts/workbench.py`、`skill/html-workbench/assets/workbench.html` |
+| 引擎版本 | `SERVICE_VERSION = "2.1.0"` |
+| 作者 | alienzhou |
+
+本仓库中的对应文件及其哈希（SHA-256）：
+
+| 本仓库文件 | 上游原始哈希 | 本仓库哈希 | 改动 |
+| --- | --- | --- | --- |
+| `assets/workbench.html` | `2f1d44373ea6521df6dab86a995a4bebec3f1beaf8f11b07b6639b110b657369` | 同左（逐字节一致） | 未改动 |
+| `scripts/workbench.py` | `b8f172b773f6fdd32ac98060bffeb2db2592169834f928f55176a8abfdfa7517` | `ccb7428ad9261e894b6d80d2cb0ae6f0c50f2c2cc1e151926c47a2c1bf497378` | 一处下游补丁，见 `UPSTREAM.md` 第 3 节 |
+
+### ⚠️ 关于上游许可状态的重要说明
+
+这里有两个**相互冲突**的事实，请一起看，不要只看一半。
+
+**事实 A：上游 GitHub 仓库没有 LICENSE 文件。**
+GitHub API 对该仓库返回 `license: null`，仓库根目录及 `skill/`、`dsh-plugin/` 下均无
+LICENSE / COPYING 文件。纯从仓库看，这是"未声明许可"，默认保留全部权利。
+
+**事实 B：同一位作者以 maintainer 身份在 npm 公开发布了该代码，并明确声明 MIT。**
+
+```
+npm registry: @vibe-x/dsh-html-workbench
+  latest        : 0.3.0
+  license       : MIT          ← 发布者明示
+  maintainers   : alienzhou    ← 上游作者本人
+  first publish : 2026-08-17
+```
+
+包的 contents 就是本仓库 `scripts/workbench.py` 与 `assets/workbench.html` 的来源
+（`dsh-plugin/` 打包产物）。也就是说，**作者主动对外分发这份代码时，说的是 MIT。**
+
+**怎么读这两个事实：** 作者想让这份代码以 MIT 传播的意图是明确的，缺 LICENSE 文件
+更像是仓库层面的疏忽，而非"保留全部权利"的意思表示。但 LICENSE 文件的缺失是客观事实，
+严格讲，GitHub ToS 对公开仓库授予其他用户的权利**仅限服务内**
+（`D.5`：*"...a nonexclusive, worldwide license to use, display, perform and reproduce
+(by forking) Your Content **through the Service**..."*），并不包含下载与站外再分发。
+
+因此本项目的处理原则是——**如实呈现，不替任何一方下结论**：
+
+1. **不为上游代码单方面宣称 MIT。** 根 `LICENSE`（MIT）只覆盖本项目原创部分，
+   `scripts/workbench.py` 与 `assets/workbench.html` 被明确排除在外。老实说，
+   我们有理由相信它们是 MIT；但"相信"不等于"有权替作者声明"。
+2. **保留完整来源与哈希**，任何人都能自行核对、自行判断。
+3. 在行为上按 MIT 对待上游文件（修改、再分发、保留版权声明）——这是基于事实 B
+   的合理信赖；若上游后续追加了**不同的** LICENSE，以新 LICENSE 为准，届时
+   本文件与 `UPSTREAM.md` 会同步修订。
+
+> **给想复用上游文件的你：** 上述不确定性只存在于"上游作者怎么想"这一层。
+> 如果这件事对你的场景重要，**花 30 秒去上游提个 issue 问一句**，作者一句话就能
+> 把风险降到零。这比读十遍本文件有用。
+
+若你是上游作者并希望调整这里的描述，请提 issue，我会立刻改。
+
+---
+
+## 2. GrapesJS（BSD-3-Clause）
+
+编辑器前端依赖的 GrapesJS 构建产物被完整放进 `vendor/`，以便离线运行。
+
+| 项目 | 值 |
+| --- | --- |
+| 组件 | GrapesJS |
+| 版本 | `0.23.4` |
+| 许可 | BSD-3-Clause |
+| 版权 | Copyright (c) 2017-current, Artur Arseniev |
+| 主页 | https://grapesjs.com/ |
+
+| 本仓库文件 | SHA-256 |
+| --- | --- |
+| `vendor/grapes.min.js` | `66155421db3a640add8eaf77391b6a744d36af80833cd91d44f8d3220fb76231` |
+| `vendor/grapes.min.css` | `fb55e939b3349c280d68c0617dc87e56baa3eab55ea56a1855db9f5efcc7268d` |
+
+完整许可文本见 **[vendor/LICENSE-grapesjs.txt](vendor/LICENSE-grapesjs.txt)**。
+
+---
+
+## 3. 本项目原创部分（MIT）
+
+以下文件由本项目作者撰写，采用 MIT 许可（见根 `LICENSE`）：
+
+- `scripts/launcher.py` — 启动器（挑文件、拉服务、开浏览器、最近文件、status/stop）
+- `scripts/find-python.bat` — Python 解释器探测（逐个实际执行验证，跳过 Windows 商店桩文件）
+- `start-workbench.bat` / `stop-workbench.bat` — Windows 双击与拖拽入口
+- `start-workbench.command` — macOS / Linux 入口
+- `pages/example.html`、`docs/`、`README.md`、`README.zh-CN.md`、`UPSTREAM.md`、本文件
+
+---
+
+_本文件随仓库同步更新。若上游补上 LICENSE，本文件第 1 节会相应修订。_

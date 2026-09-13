@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "HTML Fiddle 运行时架构",
+    "output": "architecture.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "entry", "type": "frontend", "label": "双击入口", "sublabel": "start-workbench.bat", "pos": [50, 60], "size": [180, 62] },
+    { "id": "pythonpick", "type": "backend", "label": "解释器探测", "sublabel": "find-python.bat", "tag": "执行验证", "pos": [50, 180], "size": [180, 62] },
+    { "id": "launcher", "type": "backend", "label": "启动器", "sublabel": "launcher.py", "pos": [50, 300], "size": [180, 62] },
+    { "id": "engine", "type": "backend", "label": "本地引擎", "sublabel": "workbench.py", "tag": "纯标准库", "pos": [560, 281], "size": [280, 100] },
+    { "id": "editor", "type": "frontend", "label": "编辑器界面", "sublabel": "workbench.html + GrapesJS", "pos": [610, 100], "size": [180, 66] },
+    { "id": "vendor", "type": "database", "label": "离线资源", "sublabel": "vendor/", "tag": "sha256 锁定", "pos": [610, 470], "size": [180, 66] },
+    { "id": "doc", "type": "database", "label": "目标文件", "sublabel": "任意 .html", "pos": [1160, 298], "size": [230, 66] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "本机 · 全程离线（仅 127.0.0.1:4318）", "wraps": ["engine", "doc", "vendor"] }
+  ],
+  "connections": [
+    { "id": "entry-python", "from": "entry", "to": "pythonpick", "label": "解析解释器", "labelAt": [140, 151] },
+    { "id": "python-launcher", "from": "pythonpick", "to": "launcher", "label": "选定解释器", "labelAt": [140, 271] },
+    { "id": "launcher-engine", "from": "launcher", "to": "engine", "label": "拉起并探活" },
+    { "id": "engine-editor", "from": "engine", "to": "editor", "label": "提供页面 · 接收保存", "variant": "emphasis", "labelAt": [700, 223] },
+    { "id": "engine-doc", "from": "engine", "to": "doc", "label": "读写 .html" },
+    { "id": "engine-vendor", "from": "engine", "to": "vendor", "label": "本地加载", "variant": "dashed", "labelAt": [700, 425] }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "启动链路", "items": ["双击图标，或把 .html 拖到 start-workbench.bat 上", "find-python.bat 逐个“真的跑一遍”验证解释器，跳过商店的 0 字节桩文件（否则只报 9009）", "launcher.py 后台拉起服务，探活后打开浏览器"] },
+    { "dot": "emerald", "title": "引擎与编辑器", "items": ["workbench.py 纯标准库，监听 127.0.0.1:4318", "编辑器页面与 GrapesJS 由引擎直接提供，前端未改动", "/api/document 读写、/api/events 监听外部改动"] },
+    { "dot": "amber", "title": "离线与安全", "items": ["vendor/ 里 GrapesJS 的 sha256 与引擎硬编码值一致，启动不联网", "保存带 revision 校验：文件被外部改过就拒绝覆盖", "服务无鉴权且只绑回环，请勿把端口转发出去"] }
+  ]
+}

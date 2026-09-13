@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML Fiddle 示例页</title>
+  <style>
+    :root { --ink: #18181b; --muted: #52525b; --accent: #2563eb; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+           margin: 0; padding: 56px 24px; color: var(--ink); line-height: 1.65;
+           background: #fafafa; }
+    .wrap { max-width: 780px; margin: 0 auto; }
+    h1 { font-size: 34px; margin: 0 0 8px; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); margin: 0 0 32px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { background: #fff; border: 1px solid #e4e4e7; border-radius: 12px; padding: 18px; }
+    .card h2 { font-size: 15px; margin: 0 0 6px; }
+    .card p { margin: 0; font-size: 13px; color: var(--muted); }
+    code { background: #f4f4f5; padding: 1px 5px; border-radius: 5px; font-size: 13px; }
+    footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid #e4e4e7;
+             font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>HTML Fiddle 示例页</h1>
+    <p class="sub">这是一个可以被可视化编辑的普通 HTML 文件。改完点 Save，磁盘上的源文件会同步更新。</p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>直接改文字</h2>
+        <p>双击任意段落即可就地编辑，不用碰代码。</p>
+      </div>
+      <div class="card">
+        <h2>调样式</h2>
+        <p>选中元素后，在样式面板改字号、颜色和间距。</p>
+      </div>
+      <div class="card">
+        <h2>预览交互</h2>
+        <p>切到 Preview 验证脚本与响应式表现。</p>
+      </div>
+    </div>
+
+    <footer>
+      保存时会做 <code>revision</code> 校验：若文件已被外部改动，保存会拒绝覆盖而不是悄悄盖掉。
+    </footer>
+  </div>
+</body>
+</html>

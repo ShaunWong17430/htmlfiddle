@@ -1,0 +1,25 @@
+# 行尾策略：仓库内统一存 LF，检出时按平台还原。
+# .bat 必须是 CRLF —— cmd 对纯 LF 的批处理在标签 / goto / 多行括号块上会出错。
+
+* text=auto eol=lf
+
+*.bat      text eol=crlf
+*.cmd      text eol=crlf
+*.ps1      text eol=crlf
+
+*.command  text eol=lf
+*.sh       text eol=lf
+*.py       text eol=lf
+
+# 二进制 / 已压缩资源，禁止任何换行转换与 diff
+*.png  binary
+*.jpg  binary
+*.webp binary
+*.ico  binary
+*.min.js  -diff linguist-vendored
+*.min.css -diff linguist-vendored
+
+# 让 GitHub 语言统计忽略上游引擎与第三方资源，正确反映本项目规模
+vendor/**             linguist-vendored
+assets/workbench.html linguist-vendored
+docs/*.html           linguist-documentation

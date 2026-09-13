@@ -1,0 +1,31 @@
+# 运行时产物 / Runtime artifacts
+logs/
+state/
+runtime/
+
+# 本地工作笔记（非项目源码，不入库）
+.workbuddy/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 编辑器备份（引擎保存时会生成 .bak / ~ 结尾的副本）
+*.bak
+*~
+
+# 架构图工具的视觉校验截图（体积大、无文档引用）
+docs/*.visual-check.*.png
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp

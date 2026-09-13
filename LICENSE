@@ -1,0 +1,41 @@
+MIT License
+
+Copyright (c) 2026 ShaunWong17430
+
+Scope of this license
+
+This license covers the code authored in this repository — the standalone
+launcher, the platform entry scripts, the documentation and the example page:
+
+  - scripts/launcher.py
+  - scripts/find-python.bat
+  - start-workbench.bat
+  - stop-workbench.bat
+  - start-workbench.command
+  - pages/example.html
+  - docs/ (except the vendored third-party material noted below)
+  - README.md, README.zh-CN.md, UPSTREAM.md, NOTICE
+
+It does NOT cover the files derived from the upstream project
+`alienzhou/html-workbench` (scripts/workbench.py, assets/workbench.html)
+nor the vendored GrapesJS build (vendor/grapes.min.js, vendor/grapes.min.css).
+Those remain under the terms of their respective owners. See NOTICE for
+attribution and for the exact provenance of every derived file.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

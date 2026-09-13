@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML Fiddle · 使用说明</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --card: #ffffff;
+    --ink: #16202c;
+    --ink-2: #46586c;
+    --ink-3: #6b7d91;
+    --line: #dfe6ec;
+    --line-2: #eef2f6;
+    --accent: #0f766e;
+    --accent-soft: #e6f4f1;
+    --code-bg: #f0f4f7;
+    --warn-bg: #fff8ea;
+    --warn-line: #f0d9a8;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB",
+                 ui-sans-serif, system-ui, -apple-system, "Noto Sans CJK SC", sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  code, pre, kbd {
+    font-family: "Cascadia Mono", "JetBrains Mono", Consolas, "SFMono-Regular",
+                 ui-monospace, Menlo, monospace;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px 72px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f2f7f6 100%);
+    border-bottom: 1px solid var(--line);
+    padding: 52px 0 36px;
+  }
+  .hero .wrap { padding-bottom: 0; }
+  .eyebrow {
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 0 0 14px;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -.01em;
+  }
+  .lede { margin: 0; max-width: 62ch; font-size: 16.5px; color: var(--ink-2); }
+  .lede strong { color: var(--ink); }
+  .badges { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 0; }
+  .badges li {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    background: #ffffff;
+    border: 1px solid #cfe3df;
+    border-radius: 999px;
+    padding: 4px 12px;
+  }
+
+  /* ---------- toc ---------- */
+  nav.toc { border-bottom: 1px solid var(--line); background: #fff; }
+  nav.toc .wrap { padding: 12px 28px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  nav.toc a {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    padding: 2px 0;
+  }
+  nav.toc a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 46px; scroll-margin-top: 16px; }
+  h2 {
+    margin: 0 0 6px;
+    font-size: 23px;
+    line-height: 1.3;
+    letter-spacing: -.005em;
+  }
+  h2 .num {
+    display: inline-block;
+    min-width: 1.6em;
+    color: var(--ink-3);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  h3 { margin: 26px 0 8px; font-size: 16.5px; }
+  p { margin: 10px 0; }
+  .sub { color: var(--ink-3); font-size: 13.5px; margin: 0 0 18px; }
+  a { color: var(--accent); }
+  ul, ol { margin: 10px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .grid { display: grid; gap: 16px; }
+  @media (min-width: 780px) {
+    .grid.two { grid-template-columns: 1fr 1fr; }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
+  }
+  .card h3 { margin-top: 0; }
+  .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+  code {
+    background: var(--code-bg);
+    border: 1px solid var(--line-2);
+    border-radius: 5px;
+    padding: 1px 5px;
+    font-size: 13px;
+  }
+  pre {
+    background: #1e2937;
+    color: #e6edf3;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.65;
+    margin: 12px 0;
+  }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 13px; }
+  pre .c { color: #8fa6bb; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: #f2f5f8; font-size: 13px; color: var(--ink-2); font-weight: 700; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  .tablecard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .tablecard table { margin: 0; }
+  .tablecard th { border-bottom: 1px solid var(--line); }
+  td code { white-space: nowrap; }
+
+  .note {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    border-left: 4px solid #d99b1c;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .note strong { color: #8a5a06; }
+  .keyline {
+    background: var(--accent-soft);
+    border: 1px solid #cbe4df;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+
+  /* ---------- diagram embed ---------- */
+  .diagram-frame {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(16, 32, 48, .04);
+  }
+  .diagram-frame iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2.1 / 1;
+    min-height: 320px;
+    border: 0;
+  }
+  .diagram-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfcfd;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .diagram-bar a { font-weight: 600; text-decoration: none; }
+  .diagram-bar a:hover { text-decoration: underline; }
+
+  .legend { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--ink-2); }
+  .legend li { display: flex; align-items: center; gap: 7px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .d-front { background: #22d3ee; }
+  .d-back { background: #34d399; }
+  .d-db { background: #a78bfa; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-3);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">本地工具 · 使用说明</p>
+    <h1>HTML Fiddle</h1>
+    <p class="lede">
+      在本地浏览器里<strong>可视化编辑磁盘上的 HTML 文件</strong>：双击改文案、面板调样式、
+      切 Preview 验交互，点 Save 写回源文件。它是从 DSH 插件里把编辑器<strong>本体</strong>摘出来独立运行的版本，
+      不需要 DSH、不需要 Node/npm，只要有 Python。
+    </p>
+    <ul class="badges">
+      <li>纯 Python 标准库</li>
+      <li>不需要 Node / npm</li>
+      <li>首启不联网</li>
+      <li>127.0.0.1:4318</li>
+      <li>与 DSH 插件并存</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#what">它是什么</a>
+    <a href="#quickstart">快速开始</a>
+    <a href="#arch">运行架构</a>
+    <a href="#layout">目录结构</a>
+    <a href="#cli">命令行参考</a>
+    <a href="#trouble">故障排查</a>
+    <a href="#upstream">与上游的关系</a>
+    <a href="#safety">安全与边界</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ 1 ============ -->
+  <section id="what">
+    <h2><span class="num">01</span>它是什么</h2>
+    <p class="sub">一个"双击就能用"的本地 HTML 可视化编辑器，等于把 DSH 右侧栏里那个编辑器单独拿出来跑。</p>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>它做什么</h3>
+        <ul>
+          <li>直接在页面上点选元素、改文案</li>
+          <li>用面板调样式，实时预览</li>
+          <li>切换 Preview 验证真实交互</li>
+          <li>点 Save 把改动写回<strong>你原来那个文件</strong></li>
+          <li>文件被别的程序改动时，页面会自动刷新</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>它不做什么</h3>
+        <ul>
+          <li>不做构建、不装依赖、不生成工程</li>
+          <li>不接管你的文件：写回前有版本校验</li>
+          <li>只处理 <code>.html</code>（引擎限制）</li>
+          <li>不对外提供服务：只绑回环地址</li>
+          <li>不提供单文件 exe（原因见 <a href="#safety">安全与边界</a>）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="keyline">
+      <strong>一句话理解它：</strong>一个纯标准库的本地 HTTP 服务（引擎）＋ 一个 GrapesJS 前端页面（编辑器）。
+      启动器负责"找 Python → 拉起服务 → 打开浏览器"，仅此而已。
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section id="quickstart">
+    <h2><span class="num">02</span>快速开始</h2>
+    <p class="sub">三种启动方式，任选一种。关掉浏览器<strong>不会</strong>停止后台服务，要停就运行 <code>stop-workbench.bat</code>。</p>
+
+    <div class="grid three">
+      <div class="card">
+        <h3>① 双击</h3>
+        <p>双击 <code>start-workbench.bat</code>，它会列出最近编辑过的文件；输入序号即可，或按 <code>n</code> 新建一个。</p>
+      </div>
+      <div class="card">
+        <h3>② 拖拽</h3>
+        <p>把任意 <code>.html</code> 拖到 <code>start-workbench.bat</code> 上直接打开。文件可以在<strong>任何目录</strong>，不限 <code>pages\</code>。</p>
+      </div>
+      <div class="card">
+        <h3>③ 命令行</h3>
+        <p>习惯敲命令的话，见下方<a href="#cli">命令行参考</a>。macOS / Linux 用 <code>start-workbench.command</code>。</p>
+      </div>
+    </div>
+
+    <pre><code><span class="c">:: 打开指定文件</span>
+start-workbench.bat "D:\work\report.html"
+
+<span class="c">:: 在 pages\ 下新建 landing.html 并打开</span>
+start-workbench.bat --new landing
+
+<span class="c">:: 只看最近文件 / 体检服务与离线资源</span>
+start-workbench.bat --list
+start-workbench.bat --status
+
+<span class="c">:: 停止后台服务</span>
+stop-workbench.bat</code></pre>
+
+    <div class="note">
+      <strong>第一次使用如果只看到 <code>[exit code: 9009]</code>：</strong>
+      这是"Python 没被正确找到"的旧表现，<strong>已修复</strong>。原因是 Windows 商店的
+      <strong>零字节 App Execution Alias 桩文件</strong>（<code>…\AppData\Local\Microsoft\WindowsApps\python.exe</code>）
+      会被 <code>where python</code> 找到，但它不是真解释器，一执行就返回 9009。
+      现在入口脚本会<strong>逐个真的跑一遍</strong>来验证解释器，并按路径直接跳过商店桩文件；
+      全部失败时会给出明确的安装指引并以退出码 2 结束，而不是把 9009 抛给你。
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section id="arch">
+    <h2><span class="num">03</span>运行架构</h2>
+    <p class="sub">主链路：双击入口 → 解释器探测 → 启动器 → 本地引擎，再由引擎分出"编辑器界面 / 目标文件 / 离线资源"三条支线。</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-bar">
+        <span>由 archify 渲染 · 下方为嵌入视图</span>
+        <a href="architecture.html">在新标签页打开可交互版本 ↗</a>
+      </div>
+      <iframe src="architecture.html?embed=1&amp;theme=light"
+              title="HTML Fiddle 运行时架构图"
+              loading="lazy"></iframe>
+    </div>
+
+    <ul class="legend">
+      <li><span class="dot d-front"></span>frontend（用户界面 / 入口）</li>
+      <li><span class="dot d-back"></span>backend（本地进程）</li>
+      <li><span class="dot d-db"></span>database（本地文件 / 资源）</li>
+      <li>虚线＝非运行时依赖；绿色加粗＝主链路续接</li>
+    </ul>
+
+    <h3>怎么读这张图</h3>
+    <ul>
+      <li><strong>纵向三段是启动链路</strong>：<code>start-workbench.bat</code> 先调用 <code>find-python.bat</code> 定下可用解释器，再用它执行 <code>launcher.py</code>。</li>
+      <li><strong>启动器只做两件事</strong>：以后台方式拉起引擎，用 <code>/api/health</code> 探活，然后打开浏览器。</li>
+      <li><strong>引擎是唯一的中心</strong>：它既向浏览器提供编辑器页面（<code>workbench.html</code> + GrapesJS），也接收编辑器发来的保存请求。</li>
+      <li><strong>写盘由引擎负责</strong>：编辑器不直接碰磁盘，保存时带 revision 校验，所以外部改动不会被静默覆盖。</li>
+      <li><strong>虚线是"离线加载"</strong>：GrapesJS 预置在 <code>vendor/</code>，引擎逐字节校验哈希后直接使用，启动不需要联网。</li>
+    </ul>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section id="layout">
+    <h2><span class="num">04</span>目录结构</h2>
+    <p class="sub">带 ★ 的是本项目新写的部分；其余为上游代码。<code>UPSTREAM.md</code> 记录了完整来源与哈希。</p>
+
+    <pre><code>htmlfiddle/
+├─ start-workbench.bat      Windows 入口（双击 / 拖拽 / 传参）
+├─ stop-workbench.bat       停止后台服务
+├─ start-workbench.command  macOS / Linux 入口
+├─ scripts/
+│  ├─ launcher.py           ★ 启动器：挑文件、拉服务、开浏览器、记最近文件
+│  ├─ find-python.bat       ★ 解释器探测：逐个"真的跑一遍"验证，跳过商店桩文件
+│  └─ workbench.py          上游引擎本体（MIT，仅一处编码兼容补丁）
+├─ assets/
+│  └─ workbench.html        上游编辑器前端（GrapesJS，未改动）
+├─ vendor/                  GrapesJS 离线资源（哈希与引擎硬编码值一致）
+├─ pages/                   新建文件的默认目录（含示例 example.html）
+├─ logs/                    运行日志（按端口分文件）
+├─ state/                   最近文件记录 / 调用引擎时的中转文件
+├─ docs/                    本说明页 + 架构图（可删）
+├─ README.md                纯文本版说明
+└─ UPSTREAM.md              来源、哈希、补丁 diff、升级步骤</code></pre>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section id="cli">
+    <h2><span class="num">05</span>命令行参考</h2>
+    <p class="sub">下面这些参数由 <code>launcher.py</code> 提供，通过入口脚本透传，因此 <code>start-workbench.bat &lt;参数&gt;</code> 直接可用。</p>
+
+    <div class="tablecard">
+      <table>
+        <thead>
+          <tr><th>参数</th><th>作用</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>&lt;文件路径&gt;</code></td><td>要编辑的 <code>.html</code>；省略则进入挑选菜单</td></tr>
+          <tr><td><code>--new NAME</code></td><td>在 <code>pages/</code> 下新建 <code>NAME.html</code> 并打开</td></tr>
+          <tr><td><code>--port N</code></td><td>指定本地服务端口（默认 <code>4318</code>，可用环境变量 <code>HWF_PORT</code> 覆盖）</td></tr>
+          <tr><td><code>--no-browser</code></td><td>不自动打开浏览器，只在终端打印地址</td></tr>
+          <tr><td><code>--wait SEC</code></td><td>等待服务就绪的秒数（默认 12）</td></tr>
+          <tr><td><code>--list</code></td><td>列出最近打开的文件后退出</td></tr>
+          <tr><td><code>--status</code></td><td>体检：服务状态 + 引擎脚本 + 离线资源是否就位</td></tr>
+          <tr><td><code>--stop</code></td><td>停止指定端口上的后台服务</td></tr>
+          <tr><td><code>--version</code></td><td>打印版本</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>不想用启动器也可以直接调引擎（等价用法）：</p>
+    <pre><code>python scripts\workbench.py open "D:\work\a.html" --vendor-cache vendor --log-dir logs</code></pre>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section id="trouble">
+    <h2><span class="num">06</span>故障排查</h2>
+    <p class="sub">先跑体检：<code>start-workbench.bat --status</code>。它会把服务、引擎脚本、离线资源三件事一次讲清楚。</p>
+
+    <div class="tablecard">
+      <table>
+        <thead>
+          <tr><th>现象</th><th>原因与处理</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>只看到 <code>[exit code: 9009]</code></td>
+            <td>商店的零字节 <code>python.exe</code> 桩文件排在真解释器前面。<strong>已修复</strong>；若仍出现，说明机器上没有可用的 Python 3.9+。诊断：<code>where python</code> 的第一个结果是否指向 <code>…\WindowsApps\</code></td>
+          </tr>
+          <tr>
+            <td>提示 <code>No usable Python 3.9+ found</code></td>
+            <td>确实没装可用的 Python。装 Python 时勾选 "Add python.exe to PATH"，或改装 Miniconda。脚本已跳过商店桩文件并给出这条指引</td>
+          </tr>
+          <tr>
+            <td>提示端口被占用</td>
+            <td>换端口：<code>start-workbench.bat --port 4399 "D:\x\a.html"</code></td>
+          </tr>
+          <tr>
+            <td>浏览器打开是空白 / 报错</td>
+            <td>看 <code>logs\workbench-&lt;端口&gt;.log</code>；确认 <code>--status</code> 里引擎脚本与前端页面都"存在"</td>
+          </tr>
+          <tr>
+            <td>报 <code>VENDOR_DOWNLOAD_FAILED</code></td>
+            <td><code>vendor/</code> 被删或哈希不符（引擎逐字节校验）。放回那两个文件即可，或允许它联网重下</td>
+          </tr>
+          <tr>
+            <td>保存被拒绝（提示冲突）</td>
+            <td>这是<strong>保护机制</strong>：文件在你编辑期间被别的程序改过。刷新页面拿到最新版本再改</td>
+          </tr>
+          <tr>
+            <td>服务停不掉</td>
+            <td>先 <code>stop-workbench.bat</code>；若端口被别的程序占用，用 <code>--port</code> 换端口，或手动结束该进程</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>杀毒软件 / 防火墙可能对"启动本地服务并打开浏览器"告警，选择允许即可（仅回环地址，不对外）。</p>
+  </section>
+
+  <!-- ============ 7 ============ -->
+  <section id="upstream">
+    <h2><span class="num">07</span>与上游 DSH 插件的关系</h2>
+    <p class="sub">两者完全独立、可以并存。端口刻意错开，所以停止本项目不会误杀 DSH 拉起的服务。</p>
+
+    <div class="tablecard">
+      <table>
+        <thead>
+          <tr><th></th><th>DSH 插件</th><th>HTML Fiddle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>默认端口</td><td><code>4317</code></td><td><code>4318</code>（可用 <code>--port</code> 改）</td></tr>
+          <tr><td>界面位置</td><td>DSH 右侧栏面板</td><td>你自己的浏览器标签页</td></tr>
+          <tr><td>启动方式</td><td>DSH 载入插件时自动</td><td>双击 <code>start-workbench.bat</code></td></tr>
+          <tr><td>文件来源</td><td>自动跟踪 agent 刚写出的 html</td><td>你挑的 / 拖拽的文件</td></tr>
+          <tr><td>选中文案喂给 AI</td><td>生成 chip 塞进聊天输入框</td><td>生成选区 Markdown 并<strong>复制到剪贴板</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>代码从哪里来</h3>
+    <ul>
+      <li>引擎 <code>scripts/workbench.py</code> 与前端 <code>assets/workbench.html</code> 取自 <code>@vibe-x/dsh-html-workbench</code>（MIT）。</li>
+      <li><strong>前端未改动</strong>；引擎只有<strong>一处</strong>兼容补丁：把三处 <code>subprocess</code> 调用的输出解码加上 <code>errors="replace"</code>，
+          修掉简体中文 Windows 上 <code>stop</code> 会抛 <code>UnicodeDecodeError</code> 的上游问题（详见 <code>UPSTREAM.md</code>）。</li>
+      <li><code>vendor/</code> 里两个文件的哈希就是引擎中硬编码的期望值，<strong>逐字节一致</strong>，所以启动时校验通过、直接本地加载。</li>
+    </ul>
+
+    <p>脱离 DSH 后<strong>唯一失去</strong>的能力是"选中文案直接变成聊天框里的 chip"：上游前端本来就内建了
+      "不在 iframe 里就退回剪贴板"的降级逻辑，所以替代方案就是剪贴板。
+      其余功能（编辑、保存、预览、样式面板、外部改动自动刷新）都来自引擎，独立运行时一模一样。</p>
+  </section>
+
+  <!-- ============ 8 ============ -->
+  <section id="safety">
+    <h2><span class="num">08</span>安全与边界</h2>
+
+    <div class="note">
+      <strong>服务没有任何鉴权。</strong>它只监听 <code>127.0.0.1</code>，不对局域网暴露，
+      但<strong>本机上任何程序都能通过 <code>http://127.0.0.1:4318</code> 读写你正在编辑的那个 html 文件</strong>。
+      所以：不要把端口转发出去，也不要在不可信的多用户机器上长期挂着。
+    </div>
+
+    <ul>
+      <li>引擎可以打开<strong>任意路径</strong>的 <code>.html</code>，不限于 <code>pages/</code>。</li>
+      <li>保存带 <code>revision</code> 校验：文件被外部改过时保存会被<strong>拒绝</strong>（<code>409 REVISION_CONFLICT</code>），而不是覆盖。</li>
+      <li>保存时引擎会往文件 <code>&lt;head&gt;</code> 里插入一个 <code>&lt;style data-grapesjs-overrides&gt;</code> 块，
+          用于承载样式面板产生的覆盖样式——这是上游既有行为，属该工具的正常工作方式。</li>
+      <li><strong>没有提供单文件 exe</strong>：启动器以子进程方式调用 <code>scripts/workbench.py</code>，
+          用 PyInstaller 冻结后 <code>sys.executable</code> 不再指向 Python，需要额外做 argv 分发改造，
+          不是"打包一下就完事"，所以宁可不做，也不给一个坏掉的 exe。
+          若目标机器没有 Python，推荐把 Windows 版 <strong>embeddable Python</strong> 放进 <code>runtime/</code>。</li>
+      <li>运行要求：<strong>Python ≥ 3.9</strong>，只用标准库；本机已有 3.13，开箱可用。</li>
+    </ul>
+  </section>
+
+  <footer>
+    HTML Fiddle · 本页与架构图均可离线查看。
+    架构图由 <strong>archify</strong> 生成（<code>docs/architecture.html</code>，规格见 <code>docs/architecture.json</code>）。
+    引擎与前端著作权归 <code>@vibe-x/dsh-html-workbench</code>（MIT）原作者；GrapesJS 为 BSD-3-Clause。
+  </footer>
+
+</main>
+</body>
+</html>
